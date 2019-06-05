@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  </head>
+  <style>
+
+      #c1{
+         background-color:#E91E63;min-height:500px;width:500px;padding:30px;margin-top:70px;color:white;border-bottom:5px solid #BDBDBD;
+      }
+      /*
+      #c1:before {
+        position:absolute; left:-1px; top:-1px; content:'';
+        border-top: 30px solid white;
+        border-right: 30px solid transparent;
+        
+    }
+
+    #c1:after {
+        position:absolute; left:-2px; top:-2px; content:'';
+        border-top: 30px solid white;
+        border-right: 30px solid transparent;
+    }
+    */
+    #n{
+        border-bottom:3px solid #2196F3;
+    }
+    
+  </style>
+  <body style="background:url('https://cdn.pixabay.com/photo/2016/11/01/18/38/background-1789175_960_720.png');">
+    <center>
+            <div id="root"></div>
+    </center>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script type="text/babel">
+        class App extends React.Component
+        {
+            state = {
+                num : "",
+                fact:""
+            }
+            handleChange = (e) => {
+              this.setState({
+                  num:e.target.value
+              })
+              let a = e.target.value
+              if(a!='')
+              {
+                fetch(`http://numbersapi.com/${a}`).then(res=>res.text()).then(data=>{
+                  this.setState({
+                      fact:data
+                  })
+              }).catch(err=>console.log(err))
+              }
+            }
+        
+            render(){
+                return(
+                <div class="card" id="c1">
+                        <h4 class="text-white">Number Facts</h4><br></br>
+                        <input type="text" id="n" class="form-control" value={this.state.num} onChange={this.handleChange} placeholder="enter any number"/>
+                        <br></br>
+                        { this.state.num == ''? '': <h1 id="hh">{this.state.fact}</h1>}
+                </div>
+
+                )
+            }
+        }
+        ReactDOM.render(<App/>,document.getElementById("root"));
+    </script>
+</body>
+</html>
